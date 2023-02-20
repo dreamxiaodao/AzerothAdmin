@@ -718,3 +718,12 @@ function HonorUpdateButton()
   MangAdmin:ChatMsg(".honor update ")
   MangAdmin:LogAction(".honor update.")
 end
+
+--发送物品
+function SendItems(subject, content, itemsets)
+  local cname = ma_charactertarget:GetText()
+
+  lcoal gmText = ".send items " .. cname .. ""
+  MangAdmin:ChatMsg(gmText)
+  MangAdmin:LogAction(gmText)
+end
