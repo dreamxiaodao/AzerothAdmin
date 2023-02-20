@@ -719,11 +719,37 @@ function HonorUpdateButton()
   MangAdmin:LogAction(".honor update.")
 end
 
---发送物品
-function SendItems(subject, content, itemsets)
-  local cname = ma_charactertarget:GetText()
+function splitTable(tbl, size)
+  local new_tbl = {}
+  for k, v in pairs(tbl) do
+      if k % size == 0 then
+          new_tbl[#new_tbl + 1] = {v}
+      else
+          new_tbl[#new_tbl][#new_tbl[#new_tbl] + 1] = v
+      end
+  end
+  return new_tbl
+end
 
-  lcoal gmText = ".send items " .. cname .. ""
+--send mail item
+function SendItems(subject, content, itemSets)
+  local cname = ma_charactertarget:GetText()
+  local MAX_MAIL_STACK = 12
+
+  local itemString = ""
+
+  if typeof(itemSets) == "table" then
+
+    local smallTables = splitTable(itemSets, MAX_MAIL_STACK)
+    for k,v in pairs(smallTables) do
+      --itemid:num
+      itemString = itemString .. v .. ":1 " 
+    end
+  else
+    --
+  end
+
+  lcoal gmText = ".send items " .. cname .. "" .. "\"" .. subject .."\" " .. "\"" .. content .."\" " .. itemString
   MangAdmin:ChatMsg(gmText)
   MangAdmin:LogAction(gmText)
 end
